@@ -19,7 +19,12 @@ public class Guest {
     }
 
     String toCSV(){
-        return String.format("%s,%s,%d,%s\n", firstName, lastName, age, gender);
+        return String.format("%s,%s,%d,%s%s",
+                firstName,
+                lastName,
+                age,
+                gender,
+                System.getProperty("line.separator"));
     }
 
 
