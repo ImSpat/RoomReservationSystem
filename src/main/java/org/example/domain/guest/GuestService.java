@@ -18,4 +18,8 @@ public class GuestService {
     public List<Guest> getAllGuests() {
         return repository.getAll();
     }
+
+    public void saveAll(){
+        repository.saveAll();
+    }
 }
