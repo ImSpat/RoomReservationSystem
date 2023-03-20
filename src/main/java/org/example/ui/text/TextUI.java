@@ -8,6 +8,7 @@ import org.example.domain.room.Room;
 import org.example.domain.room.RoomService;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class TextUI {
@@ -38,24 +39,31 @@ public class TextUI {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Nieznany kod błędu");
             System.out.println("Komunikat błędu: " + e.getMessage());
-        } finally {
-            System.out.println("Wychodzę z aplikacji");
         }
 
     }
 
     private void performAction(Scanner input) {
 
-        int option = getActionFromUser(input);
+        int option = -1;
 
-        if (option == 1) {
-            readNewGuestData(input);
-        } else if (option == 2) {
-            readNewRoomData(input);
-        } else if (option == 3) {
-            System.out.println("Wybrano opcję 3.");
-        } else {
-            throw new WrongOptionException("Wrong option in main menu");
+        while (option != 0) {
+
+            option = getActionFromUser(input);
+
+            if (option == 1) {
+                readNewGuestData(input);
+            } else if (option == 2) {
+                readNewRoomData(input);
+            } else if (option == 3) {
+                showAllGuests();
+            } else if (option == 4) {
+                showAllRooms();
+            } else if (option == 0) {
+                System.out.println("Wychodzę z aplikacji.");
+            } else {
+                throw new WrongOptionException("Wrong option in main menu");
+            }
         }
     }
 
@@ -63,7 +71,9 @@ public class TextUI {
 
         System.out.println("1. Dodaj nowego gościa.");
         System.out.println("2. Dodaj nowy pokój.");
-        System.out.println("3. Wyszukaj gościa.");
+        System.out.println("3. Wypisz wszystkich gości.");
+        System.out.println("4. Wypisz pokoje");
+        System.out.println("0. Wyjście z aplikacji");
         System.out.println("Wybierz opcję: ");
 
         int option;
@@ -97,7 +107,7 @@ public class TextUI {
             boolean isMale = genderOption == 1;
 
             Guest newGuest = guestService.createNewGuest(firstName, lastName, age, isMale);
-            System.out.println(newGuest.getInfo());
+            System.out.println("Dodano nowego gościa: " + newGuest.getInfo());
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use only numbers when choosing gender");
         }
@@ -111,7 +121,7 @@ public class TextUI {
             int number = input.nextInt();
             int[] bedTypes = chooseBedType(input);
             Room newRoom = roomService.createNewRoom(number, bedTypes);
-            System.out.println(newRoom.getInfo());
+            System.out.println("Dodano nowy pokoj: " + newRoom.getInfo());
         } catch (InputMismatchException e) {
             throw new OnlyNumberException("Use numbers when creating new room");
         }
@@ -136,6 +146,20 @@ public class TextUI {
         }
 
         return bedTypes;
+    }
+
+    private void showAllGuests() {
+        List<Guest> guests = guestService.getAllGuests();
+        for (Guest guest : guests) {
+            System.out.println(guest.getInfo());
+        }
+    }
+
+    private void showAllRooms() {
+        List<Room> rooms = roomService.getAllRooms();
+        for (Room room : rooms) {
+            System.out.println(room.getInfo());
+        }
     }
 
 }
