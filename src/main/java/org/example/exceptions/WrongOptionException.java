@@ -1,8 +1,8 @@
-package org.example;
+package org.example.exceptions;
 
 public class WrongOptionException extends ReservationCustomException {
 
-    private int code = 101;
+    private final int code = 101;
 
 
     public WrongOptionException(String message) {

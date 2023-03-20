@@ -1,4 +1,4 @@
-package org.example;
+package org.example.exceptions;
 
 public abstract class ReservationCustomException extends RuntimeException {
 
@@ -6,5 +6,5 @@ public abstract class ReservationCustomException extends RuntimeException {
         super(message);
     }
 
-    abstract int getCode();
+    public abstract int getCode();
 }
