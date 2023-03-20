@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -14,6 +15,24 @@ public class App {
 
         Scanner input = new Scanner(System.in);
 
+        try {
+            performAction(input);
+        } catch (WrongOptionException | OnlyNumberException e) {
+            System.out.println("Wystąpił niespodziewany błąd");
+            System.out.println("Kod błędu: " + e.getCode());
+            System.out.println("Komunikat błędu: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Wystąpił niespodziewany błąd");
+            System.out.println("Nieznany kod błędu");
+            System.out.println("Komunikat błędu: " + e.getMessage());
+        } finally {
+            System.out.println("Wychodzę z aplikacji");
+        }
+
+    }
+
+    private static void performAction(Scanner input) {
+
         int option = getActionFromUser(input);
 
         if (option == 1) {
@@ -23,7 +42,7 @@ public class App {
         } else if (option == 3) {
             System.out.println("Wybrano opcję 3.");
         } else {
-            System.out.println("Wybrano niepoprawną akcję.");
+            throw new WrongOptionException("Wrong option in main menu");
         }
     }
 
@@ -47,9 +66,8 @@ public class App {
 
         try {
             option = in.nextInt();
-        } catch (Exception e) {
-            System.out.println("Niepoprawne dane wejsciowe, wprowadz liczbę.");
-            e.printStackTrace();
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use only numbers in main menu");
         }
 
         return option;
@@ -71,13 +89,14 @@ public class App {
                 gender = Gender.MALE;
             } else if (genderOption == 2) {
                 gender = Gender.FEMALE;
+            } else {
+                throw new WrongOptionException("Wrong option in gender selection");
             }
             Guest newGuest = new Guest(firstName, lastName, age, gender);
             System.out.println(newGuest.getInfo());
             return newGuest;
-        } catch (Exception e) {
-            System.out.println("Zły wiek, używaj liczb.");
-            return null;
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use only numbers when choosing gender");
         }
     }
 
@@ -90,10 +109,8 @@ public class App {
             Room newRoom = new Room(number, bedTypes);
             System.out.println(newRoom.getInfo());
             return newRoom;
-        } catch (Exception e) {
-            System.out.println("Używaj liczb.");
-            e.printStackTrace();
-            return null;
+        } catch (InputMismatchException e) {
+            throw new OnlyNumberException("Use numbers when creating new room");
         }
     }
 
@@ -103,7 +120,7 @@ public class App {
 
         BedType[] bedTypes = new BedType[bedNumber];
 
-        for(int i=0;i<bedNumber;i=i+1) {
+        for (int i = 0; i < bedNumber; i = i + 1) {
 
             System.out.println("Typy łóżek: ");
             System.out.println("\t1. Pojedyncze");
@@ -120,6 +137,8 @@ public class App {
                 bedType = BedType.DOUBLE;
             } else if (bedTypeOption == 3) {
                 bedType = BedType.KING_SIZE;
+            } else {
+                throw new WrongOptionException("Wrong option when selecting bed type");
             }
 
             bedTypes[i] = bedType;

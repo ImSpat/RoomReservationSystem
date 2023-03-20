@@ -1,4 +1,5 @@
 package org.example;
+
 public class Room {
 
     private int number;
@@ -12,7 +13,7 @@ public class Room {
     public String getInfo() {
 
         String bedInfo = "Rodzaje łóżek w pokoju:\n";
-        for(BedType bed : beds) {
+        for (BedType bed : beds) {
             bedInfo = bedInfo + "\t" + bed + "\n";
         }
 
