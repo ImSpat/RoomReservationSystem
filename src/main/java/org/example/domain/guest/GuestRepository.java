@@ -1,5 +1,6 @@
 package org.example.domain.guest;
 
+import org.example.exceptions.PersistenceToFileException;
 import org.example.util.Properties;
 
 import java.io.IOException;
@@ -15,7 +16,13 @@ public class GuestRepository {
     private final List<Guest> guests = new ArrayList<>();
 
     Guest createNewGuest(String firstName, String lastName, int age, Gender gender) {
-        Guest newGuest = new Guest(firstName, lastName, age, gender);
+        Guest newGuest = new Guest(findNewId(), firstName, lastName, age, gender);
+        guests.add(newGuest);
+        return newGuest;
+    }
+
+    Guest addGuestFromFile(int id, String firstName, String lastName, int age, Gender gender) {
+        Guest newGuest = new Guest(id, firstName, lastName, age, gender);
         guests.add(newGuest);
         return newGuest;
     }
@@ -24,7 +31,7 @@ public class GuestRepository {
         return guests;
     }
 
-    void saveAll(){
+    void saveAll() {
 
         StringBuilder sb = new StringBuilder();
         for (Guest guest : guests) {
@@ -36,29 +43,43 @@ public class GuestRepository {
         try {
             Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PersistenceToFileException(file.toString(), "write", "guests data");
         }
     }
 
-    void readAll(){
+    void readAll() {
 
         String name = "guests.csv";
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+
+        if (!Files.exists(file)){
+            return;
+        }
 
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
             String[] guestsAsString = data.split(System.getProperty("line.separator"));
 
-            for (String guestAsString : guestsAsString){
+            for (String guestAsString : guestsAsString) {
                 String[] guestData = guestAsString.split(",");
-                int age = Integer.parseInt(guestData[2]);
-                Gender gender = Gender.valueOf(guestData[3]);
-                createNewGuest(guestData[0], guestData[1], age, gender);
+                int id = Integer.parseInt(guestData[0]);
+                int age = Integer.parseInt(guestData[3]);
+                Gender gender = Gender.valueOf(guestData[4]);
+                addGuestFromFile(id, guestData[1], guestData[2], age, gender);
             }
         } catch (IOException e) {
-            System.out.println("Nie udało się odczytać pliku z danymi");
-            e.printStackTrace();
+            throw new PersistenceToFileException(file.toString(), "read", "guests data");
         }
 
+    }
+
+    private int findNewId() {
+        int max = 0;
+        for (Guest guest : guests) {
+            if (guest.getId() > max) {
+                max = guest.getId();
+            }
+        }
+        return max + 1;
     }
 }

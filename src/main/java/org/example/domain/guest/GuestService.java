@@ -19,7 +19,7 @@ public class GuestService {
         return repository.getAll();
     }
 
-    public void saveAll(){
+    public void saveAll() {
         repository.saveAll();
     }
 

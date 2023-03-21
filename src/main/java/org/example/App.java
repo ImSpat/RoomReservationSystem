@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.exceptions.PersistenceToFileException;
 import org.example.ui.text.TextUI;
 import org.example.util.Properties;
 
@@ -14,7 +15,7 @@ public class App {
         try {
             Properties.createDataDirectory();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new PersistenceToFileException(Properties.DATA_DIRECTORY.toString(), "create", "directory");
         }
         textUI.showSystemInfo();
         textUI.showMainMenu();

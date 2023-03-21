@@ -1,6 +1,7 @@
 package org.example.ui.text;
 
 import org.example.exceptions.OnlyNumberException;
+import org.example.exceptions.PersistenceToFileException;
 import org.example.exceptions.WrongOptionException;
 import org.example.domain.guest.Guest;
 import org.example.domain.guest.GuestService;
@@ -19,7 +20,7 @@ public class TextUI {
 
     public void showSystemInfo() {
 
-        System.out.print("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
+        System.out.println("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
         System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
         System.out.println("Wersja developerska: " + Properties.IS_DEVELOPER_VERSION);
 
@@ -35,14 +36,16 @@ public class TextUI {
 
         try {
             performAction(input);
-        } catch (WrongOptionException | OnlyNumberException e) {
+        } catch (WrongOptionException | OnlyNumberException | PersistenceToFileException e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Kod błędu: " + e.getCode());
             System.out.println("Komunikat błędu: " + e.getMessage());
+            e.printStackTrace();
         } catch (Exception e) {
             System.out.println("Wystąpił niespodziewany błąd");
             System.out.println("Nieznany kod błędu");
             System.out.println("Komunikat błędu: " + e.getMessage());
+            e.printStackTrace();
         }
 
     }

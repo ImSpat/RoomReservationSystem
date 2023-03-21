@@ -35,7 +35,8 @@ public class RoomService {
     public List<Room> getAllRooms() {
         return repository.getAll();
     }
-    public void saveAll(){
+
+    public void saveAll() {
         repository.saveAll();
     }
 
