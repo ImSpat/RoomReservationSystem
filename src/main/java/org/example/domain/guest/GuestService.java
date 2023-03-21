@@ -26,4 +26,16 @@ public class GuestService {
     public void readAll() {
         repository.readAll();
     }
+
+    public void removeGuest(int id) {
+        repository.remove(id);
+    }
+
+    public void editGuest(int id, String firstName, String lastName, int age, boolean isMale) {
+        Gender gender = Gender.FEMALE;
+        if (isMale) {
+            gender = Gender.MALE;
+        }
+        repository.edit(id, firstName, lastName, age, gender);
+    }
 }
