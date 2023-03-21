@@ -1,14 +1,17 @@
 package org.example.ui.text;
 
+import org.example.domain.guest.Guest;
+import org.example.domain.guest.GuestService;
+import org.example.domain.reservation.Reservation;
+import org.example.domain.reservation.ReservationService;
+import org.example.domain.room.Room;
+import org.example.domain.room.RoomService;
 import org.example.exceptions.OnlyNumberException;
 import org.example.exceptions.PersistenceToFileException;
 import org.example.exceptions.WrongOptionException;
-import org.example.domain.guest.Guest;
-import org.example.domain.guest.GuestService;
-import org.example.domain.room.Room;
-import org.example.domain.room.RoomService;
 import org.example.util.Properties;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +20,7 @@ public class TextUI {
 
     private final GuestService guestService = new GuestService();
     private final RoomService roomService = new RoomService();
+    private final ReservationService reservationService = new ReservationService();
 
     public void showSystemInfo() {
 
@@ -74,6 +78,8 @@ public class TextUI {
                 removeRoom(input);
             } else if (option == 8) {
                 editRoom(input);
+            } else if (option == 9) {
+                createReservation(input);
             } else if (option == 0) {
                 System.out.println("Wychodzę z aplikacji. Zapisuję dane.");
                 guestService.saveAll();
@@ -81,6 +87,28 @@ public class TextUI {
             } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }
+        }
+    }
+
+    private void createReservation(Scanner input) {
+        System.out.println("Od kiedy (DD.MM.YYYY): ");
+        String fromAsString = input.next();
+        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_FORMATTER);
+
+        System.out.println("Do kiedy (DD.MM.YYYY): ");
+        String toAsString = input.next();
+        LocalDate to = LocalDate.parse(toAsString, Properties.DATE_FORMATTER);
+
+        System.out.println("ID Pokoju: ");
+        int roomId = input.nextInt();
+
+        System.out.println("ID Gościa: ");
+        int guestId = input.nextInt();
+
+        //TODO Handle null reservation?
+        Reservation res = reservationService.createNewReservation(from, to, roomId, guestId);
+        if (res!=null){
+            System.out.println("Udało się stworzyć rezerwację");
         }
     }
 
@@ -105,7 +133,7 @@ public class TextUI {
         } catch (Exception e) {
             throw new OnlyNumberException("Use numbers when inserting ID");
         }
-        
+
     }
 
     private void editGuest(Scanner input) {
@@ -157,6 +185,7 @@ public class TextUI {
         System.out.println("6. Edytuj dane gościa.");
         System.out.println("7. Usuń pokój.");
         System.out.println("8. Edytuj pokój.");
+        System.out.println("9. Stwórz rezerwację");
         System.out.println("0. Wyjście z aplikacji.");
         System.out.println("Wybierz opcję: ");
 

@@ -104,4 +104,13 @@ public class RoomRepository {
         this.remove(id);
         this.addExistingRoom(id,number,bedTypes);
     }
+
+    public Room getById(int id) {
+        for (Room room : rooms) {
+            if (room.getId() == id){
+                return room;
+            }
+        }
+        return null;
+    }
 }

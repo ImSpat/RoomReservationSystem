@@ -101,4 +101,13 @@ public class GuestRepository {
         remove(id);
         addExistingGuest(id, firstName, lastName, age, gender);
     }
+
+    public Guest findById(int Id) {
+        for (Guest guest : guests) {
+            if (guest.getId() == Id) {
+                return guest;
+            }
+        }
+        return null;
+    }
 }
