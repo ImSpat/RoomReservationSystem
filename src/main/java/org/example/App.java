@@ -1,6 +1,9 @@
 package org.example;
 
 import org.example.ui.text.TextUI;
+import org.example.util.Properties;
+
+import java.io.IOException;
 
 public class App {
 
@@ -8,11 +11,12 @@ public class App {
 
     public static void main(String[] args) {
 
-        String hotelName = "Overlook";
-        int systemVersion = 1;
-        boolean isDeveloperVersion = true;
-
-        textUI.showSystemInfo(hotelName, systemVersion, isDeveloperVersion);
+        try {
+            Properties.createDataDirectory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        textUI.showSystemInfo();
         textUI.showMainMenu();
 
 

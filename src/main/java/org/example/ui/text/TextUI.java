@@ -6,6 +6,7 @@ import org.example.domain.guest.Guest;
 import org.example.domain.guest.GuestService;
 import org.example.domain.room.Room;
 import org.example.domain.room.RoomService;
+import org.example.util.Properties;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -16,11 +17,11 @@ public class TextUI {
     private final GuestService guestService = new GuestService();
     private final RoomService roomService = new RoomService();
 
-    public void showSystemInfo(String hotelName, int systemVersion, boolean isDeveloperVersion) {
+    public void showSystemInfo() {
 
-        System.out.print("Witam w systemie rezerwacji dla hotelu " + hotelName);
-        System.out.println("Aktualna wersja systemu: " + systemVersion);
-        System.out.println("Wersja developerska: " + isDeveloperVersion);
+        System.out.print("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
+        System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
+        System.out.println("Wersja developerska: " + Properties.IS_DEVELOPER_VERSION);
 
         System.out.println("\n=========================\n");
     }
@@ -29,6 +30,7 @@ public class TextUI {
 
         System.out.println("Trwa ładowanie danych");
         guestService.readAll();
+        roomService.readAll();
         Scanner input = new Scanner(System.in);
 
         try {
@@ -64,6 +66,7 @@ public class TextUI {
             } else if (option == 0) {
                 System.out.println("Wychodzę z aplikacji. Zapisuję dane.");
                 guestService.saveAll();
+                roomService.saveAll();
             } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }

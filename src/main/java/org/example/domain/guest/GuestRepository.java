@@ -1,5 +1,7 @@
 package org.example.domain.guest;
 
+import org.example.util.Properties;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -30,12 +32,8 @@ public class GuestRepository {
         }
 
         String name = "guests.csv";
-        Path file = Paths.get(System.getProperty("user.home"),"reservation_system",name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
         try {
-            Path reservation_system_dir = Paths.get(System.getProperty("user.home"),"reservation_system");
-            if (!Files.isDirectory(reservation_system_dir)) {
-                Files.createDirectory(reservation_system_dir);
-            }
             Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +43,7 @@ public class GuestRepository {
     void readAll(){
 
         String name = "guests.csv";
-        Path file = Paths.get(System.getProperty("user.home"),"reservation_system",name);
+        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
 
         try {
             String data = Files.readString(file, StandardCharsets.UTF_8);
