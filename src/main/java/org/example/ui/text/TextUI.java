@@ -36,6 +36,7 @@ public class TextUI {
         System.out.println("Trwa ładowanie danych");
         guestService.readAll();
         roomService.readAll();
+        reservationService.readAll();
         Scanner input = new Scanner(System.in);
 
         try {
@@ -84,6 +85,7 @@ public class TextUI {
                 System.out.println("Wychodzę z aplikacji. Zapisuję dane.");
                 guestService.saveAll();
                 roomService.saveAll();
+                reservationService.saveAll();
             } else {
                 throw new WrongOptionException("Wrong option in main menu");
             }
