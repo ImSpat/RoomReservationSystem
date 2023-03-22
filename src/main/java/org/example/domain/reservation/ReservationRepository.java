@@ -42,7 +42,7 @@ public class ReservationRepository {
     public void readAll() {
         String name = "reservations.csv";
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
-        if(!Files.exists(file)) {
+        if (!Files.exists(file)) {
             return;
         }
         try {
@@ -50,6 +50,9 @@ public class ReservationRepository {
             String[] reservationsAsString = data.split(System.getProperty("line.separator"));
             for (String reservationAsString : reservationsAsString) {
                 String[] reservationData = reservationAsString.split(",");
+                if (reservationData[0] == null || reservationData[0].trim().isEmpty()) {
+                    continue;
+                }
                 int id = Integer.parseInt(reservationData[0]);
                 int roomId = Integer.parseInt(reservationData[1]);
                 int guestId = Integer.parseInt(reservationData[2]);
@@ -62,10 +65,12 @@ public class ReservationRepository {
             throw new PersistenceToFileException(file.toString(), "read", "guests data");
         }
     }
+
     private void addExistingReservation(int id, Room room, Guest guest, LocalDateTime from, LocalDateTime to) {
         Reservation res = new Reservation(id, room, guest, from, to);
         this.reservations.add(res);
     }
+
     public void saveAll() {
         String name = "reservations.csv";
         Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
