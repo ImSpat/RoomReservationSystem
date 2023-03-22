@@ -23,8 +23,6 @@ public class App extends Application {
         Application.launch(args);
 //        textUI.showSystemInfo();
 //        textUI.showMainMenu();
-
-
     }
 
     public void start(Stage primaryStage) {

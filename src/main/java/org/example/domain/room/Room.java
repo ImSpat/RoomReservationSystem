@@ -1,5 +1,7 @@
 package org.example.domain.room;
 
+import org.example.domain.room.dto.RoomDTO;
+
 public class Room {
 
     private final int id;
@@ -34,5 +36,18 @@ public class Room {
         bedInfo.deleteCharAt(bedInfo.length() - 1);
 
         return String.format("%d,%d,%s%s", this.id, this.number, bedInfo, System.getProperty("line.separator"));
+    }
+
+    public RoomDTO generateDTO() {
+
+        String[] bedsAsString = new String[this.beds.length];
+
+        for (int i = 0; i < this.beds.length; i++) {
+            bedsAsString[i] = this.beds[i].toString();
+        }
+
+        String bedTypes = String.join(",", bedsAsString);
+
+        return new RoomDTO(this.id, this.number, bedTypes);
     }
 }
