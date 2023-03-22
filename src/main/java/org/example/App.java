@@ -1,10 +1,9 @@
 package org.example;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.example.exceptions.PersistenceToFileException;
+import org.example.ui.gui.PrimaryStage;
 import org.example.ui.text.TextUI;
 import org.example.util.Properties;
 
@@ -28,16 +27,9 @@ public class App extends Application {
 
     }
 
-    public void start(Stage primaryStage){
-        String hotelName = Properties.HOTEL_NAME;
-        int systemVersion = Properties.SYSTEM_VERSION;
-
-        Label l = new Label("Hello JavaFX");
-        Scene scene = new Scene(l, 640, 480);
-        String title = String.format("System rezerwacji hotelu %s (%d)", hotelName, systemVersion);
-        primaryStage.setTitle(title);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        PrimaryStage primary = new PrimaryStage();
+        primary.initialize(primaryStage);
     }
 
 

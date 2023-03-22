@@ -105,12 +105,12 @@ public class RoomRepository {
 
     public void edit(int id, int number, BedType[] bedTypes) {
         this.remove(id);
-        this.addExistingRoom(id,number,bedTypes);
+        this.addExistingRoom(id, number, bedTypes);
     }
 
     public Room getById(int id) {
         for (Room room : rooms) {
-            if (room.getId() == id){
+            if (room.getId() == id) {
                 return room;
             }
         }

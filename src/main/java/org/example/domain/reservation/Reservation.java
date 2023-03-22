@@ -21,7 +21,7 @@ public class Reservation {
         this.to = to;
     }
 
-    String toCSV(){
+    String toCSV() {
         return String.format("%s,%s,%s,%s,%s%s",
                 this.id,
                 room.getId(),
