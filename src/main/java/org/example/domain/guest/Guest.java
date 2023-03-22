@@ -1,5 +1,7 @@
 package org.example.domain.guest;
 
+import org.example.domain.guest.dto.GuestDTO;
+
 public class Guest {
 
     private final int id;
@@ -35,4 +37,20 @@ public class Guest {
     }
 
 
+    public GuestDTO getAsDTO() {
+        String gender = "Mężczyzna";
+        if (this.gender.equals(Gender.FEMALE)) {
+            gender = "Kobieta";
+        }
+
+        return new GuestDTO(this.id, this.firstName, this.lastName, this.age, gender);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 }

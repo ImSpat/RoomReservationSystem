@@ -72,7 +72,7 @@ public class RoomService {
         return repository.getById(roomId);
     }
 
-    public List<RoomDTO> getAllAsDTO(){
+    public List<RoomDTO> getAllAsDTO() {
 
         List<RoomDTO> result = new ArrayList<>();
 
@@ -80,6 +80,7 @@ public class RoomService {
 
         for (Room room : allRooms) {
             RoomDTO dto = room.generateDTO();
+            result.add(dto);
         }
 
         return result;

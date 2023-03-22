@@ -50,4 +50,8 @@ public class Room {
 
         return new RoomDTO(this.id, this.number, bedTypes);
     }
+
+    public int getNumber() {
+        return this.number;
+    }
 }

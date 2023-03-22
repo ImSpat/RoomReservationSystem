@@ -29,6 +29,10 @@ public class ReservationRepository {
         return res;
     }
 
+    public List<Reservation> getAll() {
+        return this.reservations;
+    }
+
     private int findNewId() {
         int max = 0;
         for (Reservation reservation : this.reservations) {

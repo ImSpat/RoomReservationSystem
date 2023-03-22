@@ -1,6 +1,7 @@
 package org.example.domain.reservation;
 
 import org.example.domain.guest.Guest;
+import org.example.domain.reservation.dto.ReservationDTO;
 import org.example.domain.room.Room;
 
 import java.time.LocalDateTime;
@@ -33,5 +34,11 @@ public class Reservation {
 
     public int getId() {
         return this.id;
+    }
+
+    public ReservationDTO getAsDTO() {
+        return new ReservationDTO(this.id, this.from,
+                this.to, this.room.getId(), this.room.getNumber(),
+                this.guest.getId(), this.guest.getFirstName() + " " + this.guest.getLastName());
     }
 }
