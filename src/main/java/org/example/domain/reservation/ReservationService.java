@@ -1,5 +1,6 @@
 package org.example.domain.reservation;
 
+import org.example.domain.ObjectPool;
 import org.example.domain.guest.Guest;
 import org.example.domain.guest.GuestService;
 import org.example.domain.reservation.dto.ReservationDTO;
@@ -14,9 +15,17 @@ import java.util.List;
 
 public class ReservationService {
 
-    private final static RoomService roomService = new RoomService();
-    private final static GuestService guestService = new GuestService();
-    private final static ReservationRepository repository = new ReservationRepository();
+    private final RoomService roomService = ObjectPool.getRoomService();
+    private final GuestService guestService = ObjectPool.getGuestService();
+    private final ReservationRepository repository = ObjectPool.getReservationRepository();
+    private static final ReservationService instance = new ReservationService();
+
+    private ReservationService() {
+    }
+
+    public static ReservationService getInstance() {
+        return instance;
+    }
 
     public Reservation createNewReservation(LocalDate from, LocalDate to, int roomId, int guestId) throws IllegalArgumentException {
 

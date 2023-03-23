@@ -2,6 +2,7 @@ package org.example;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.example.domain.ObjectPool;
 import org.example.domain.guest.GuestService;
 import org.example.domain.reservation.ReservationService;
 import org.example.domain.room.RoomService;
@@ -14,9 +15,9 @@ import java.io.IOException;
 public class App extends Application {
 
     //    private static final TextUI textUI = new TextUI();
-    private static final GuestService guestService = new GuestService();
-    private static final RoomService roomService = new RoomService();
-    private static final ReservationService reservationService = new ReservationService();
+    private static final GuestService guestService = ObjectPool.getGuestService();
+    private static final RoomService roomService = ObjectPool.getRoomService();
+    private static final ReservationService reservationService = ObjectPool.getReservationService();
 
     public static void main(String[] args) {
 

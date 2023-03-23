@@ -1,5 +1,6 @@
 package org.example.ui.text;
 
+import org.example.domain.ObjectPool;
 import org.example.domain.guest.Guest;
 import org.example.domain.guest.GuestService;
 import org.example.domain.reservation.Reservation;
@@ -18,9 +19,9 @@ import java.util.Scanner;
 
 public class TextUI {
 
-    private final GuestService guestService = new GuestService();
-    private final RoomService roomService = new RoomService();
-    private final ReservationService reservationService = new ReservationService();
+    private final GuestService guestService = ObjectPool.getGuestService();
+    private final RoomService roomService = ObjectPool.getRoomService();
+    private final ReservationService reservationService = ObjectPool.getReservationService();
 
     public void showSystemInfo() {
 
