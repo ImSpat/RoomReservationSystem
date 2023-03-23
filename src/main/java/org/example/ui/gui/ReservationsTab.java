@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ReservationsTab {
     private Tab reservationTab;
     private ReservationService reservationService = new ReservationService();
+
     public ReservationsTab() {
         TableView<ReservationDTO> tableView = new TableView<>();
 
@@ -34,6 +35,7 @@ public class ReservationsTab {
         this.reservationTab = new Tab("Rezerwacje", tableView);
         this.reservationTab.setClosable(false);
     }
+
     public Tab getReservationTab() {
         return reservationTab;
     }

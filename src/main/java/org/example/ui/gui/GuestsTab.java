@@ -10,6 +10,7 @@ import org.example.domain.guest.dto.GuestDTO;
 public class GuestsTab {
     private Tab guestTab;
     private GuestService guestService = new GuestService();
+
     public GuestsTab() {
         TableView<GuestDTO> tableView = new TableView<>();
 
@@ -32,6 +33,7 @@ public class GuestsTab {
         this.guestTab = new Tab("Goście", tableView);
         this.guestTab.setClosable(false);
     }
+
     public Tab getGuestTab() {
         return guestTab;
     }
