@@ -35,9 +35,18 @@ public class App extends Application {
 //        textUI.showMainMenu();
     }
 
+    @Override
     public void start(Stage primaryStage) {
         PrimaryStage primary = new PrimaryStage();
         primary.initialize(primaryStage);
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Wychodzę z aplikacji. Zapisuję dane.");
+        guestService.saveAll();
+        roomService.saveAll();
+        reservationService.saveAll();
     }
 
 

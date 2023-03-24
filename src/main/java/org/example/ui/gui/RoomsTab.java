@@ -1,9 +1,13 @@
 package org.example.ui.gui;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.domain.ObjectPool;
 import org.example.domain.room.RoomService;
 import org.example.domain.room.dto.RoomDTO;
@@ -15,8 +19,28 @@ public class RoomsTab {
     private Tab roomTab;
     private RoomService roomService = ObjectPool.getRoomService();
 
-    public RoomsTab() {
+    public RoomsTab(Stage primaryStage) {
 
+        TableView<RoomDTO> tableView = getRoomDTOTableView();
+
+        Button btn = new Button("Dodaj nowy");
+        btn.setOnAction(actionEvent -> {
+            Stage stg = new Stage();
+            stg.initModality(Modality.WINDOW_MODAL);
+            stg.initOwner(primaryStage);
+            stg.setScene(new AddNewRoomScene(stg, tableView).getMainScene());
+            stg.setTitle("Dodaj nowy pokój");
+
+            stg.showAndWait();
+        });
+
+        VBox layout = new VBox(btn, tableView);
+
+        this.roomTab = new Tab("Pokoje", layout);
+        this.roomTab.setClosable(false);
+    }
+
+    private TableView<RoomDTO> getRoomDTOTableView() {
         TableView<RoomDTO> tableView = new TableView<>();
 
         TableColumn<RoomDTO, Integer> numberColumn = new TableColumn<>("Numer");
@@ -36,9 +60,7 @@ public class RoomsTab {
         List<RoomDTO> allAsDTO = roomService.getAllAsDTO();
 
         tableView.getItems().addAll(allAsDTO);
-
-        this.roomTab = new Tab("Pokoje", tableView);
-        this.roomTab.setClosable(false);
+        return tableView;
     }
 
     Tab getRoomTab() {
