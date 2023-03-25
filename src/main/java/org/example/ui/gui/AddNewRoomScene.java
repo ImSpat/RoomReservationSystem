@@ -32,6 +32,12 @@ public class AddNewRoomScene {
         Label roomNumberLabel = new Label("Numer pokoju:");
         TextField roomNumberField = new TextField();
 
+        roomNumberField.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                roomNumberField.setText(oldValue);
+            }
+        });
+
         gridPane.add(roomNumberLabel, 0, 0);
         gridPane.add(roomNumberField, 1, 0);
 
