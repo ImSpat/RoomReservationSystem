@@ -25,6 +25,9 @@ public class Properties {
 
     public static final Path DATA_DIRECTORY = Paths.get(System.getProperty("user.home"), "reservation_system");
 
+    public static final String FEMALE = "Kobieta";
+    public static final String MALE = "Mężczyzna";
+
     public static void createDataDirectory() throws IOException {
         if (!Files.isDirectory(DATA_DIRECTORY)) {
             Files.createDirectory(DATA_DIRECTORY);
