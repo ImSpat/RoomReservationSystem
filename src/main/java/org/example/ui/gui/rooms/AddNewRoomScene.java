@@ -1,4 +1,4 @@
-package org.example.ui.gui;
+package org.example.ui.gui.rooms;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

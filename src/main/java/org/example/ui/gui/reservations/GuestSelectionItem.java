@@ -1,4 +1,4 @@
-package org.example.ui.gui;
+package org.example.ui.gui.reservations;
 
 public class GuestSelectionItem {
 

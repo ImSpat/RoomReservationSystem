@@ -96,4 +96,18 @@ public class ReservationRepository {
             throw new PersistenceToFileException(file.toString(), "write", "reservation data");
         }
     }
+
+    public void remove(int id) {
+        int reservationToBeRemovedIndex = -1;
+
+        for (int i = 0; i < reservations.size(); i++) {
+            if (this.reservations.get(i).getId() == id) {
+                reservationToBeRemovedIndex = i;
+                break;
+            }
+        }
+        if (reservationToBeRemovedIndex > -1) {
+            this.reservations.remove(reservationToBeRemovedIndex);
+        }
+    }
 }

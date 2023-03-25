@@ -1,4 +1,4 @@
-package org.example.ui.gui;
+package org.example.ui.gui.reservations;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
