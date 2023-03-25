@@ -1,9 +1,13 @@
 package org.example.ui.gui;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.domain.ObjectPool;
 import org.example.domain.reservation.ReservationService;
 import org.example.domain.reservation.dto.ReservationDTO;
@@ -14,7 +18,28 @@ public class ReservationsTab {
     private Tab reservationTab;
     private ReservationService reservationService = ObjectPool.getReservationService();
 
-    public ReservationsTab() {
+    public ReservationsTab(Stage primaryStage) {
+        TableView<ReservationDTO> tableView = getReservationDTOTableView();
+
+        Button btn = new Button("Utwórz rezerwację");
+
+        btn.setOnAction(actionEvent -> {
+            Stage stg = new Stage();
+            stg.initModality(Modality.WINDOW_MODAL);
+            stg.initOwner(primaryStage);
+            stg.setScene(new AddNewReservationScene(stg, tableView).getMainScene());
+            stg.setTitle("Utwórz rezerwację");
+
+            stg.showAndWait();
+        });
+
+        VBox layout = new VBox(btn, tableView);
+
+        this.reservationTab = new Tab("Rezerwacje", layout);
+        this.reservationTab.setClosable(false);
+    }
+
+    private TableView<ReservationDTO> getReservationDTOTableView() {
         TableView<ReservationDTO> tableView = new TableView<>();
 
         TableColumn<ReservationDTO, LocalDateTime> fromColumn = new TableColumn<>("Od");
@@ -32,9 +57,7 @@ public class ReservationsTab {
         tableView.getColumns().addAll(fromColumn, toColumn, roomColumn, guestColumn);
 
         tableView.getItems().addAll(reservationService.getReservationsAsDTO());
-
-        this.reservationTab = new Tab("Rezerwacje", tableView);
-        this.reservationTab.setClosable(false);
+        return tableView;
     }
 
     public Tab getReservationTab() {
