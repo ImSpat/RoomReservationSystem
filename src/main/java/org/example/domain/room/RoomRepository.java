@@ -1,7 +1,7 @@
 package org.example.domain.room;
 
 import org.example.exceptions.PersistenceToFileException;
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -47,7 +47,7 @@ public class RoomRepository {
         }
 
         String name = "rooms.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         try {
             Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class RoomRepository {
     void readAll() {
 
         String name = "rooms.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if (!Files.exists(file)) {
             return;
@@ -78,11 +78,11 @@ public class RoomRepository {
                 BedType[] bedTypes = new BedType[roomData.length - 2];
                 for (int i = 2; i < roomData.length; i++) {
                     int j = i - 2;
-                    if (roomData[i].equals(Properties.SINGLE_BED)) {
+                    if (roomData[i].equals(SystemUtils.SINGLE_BED)) {
                         bedTypes[j] = BedType.SINGLE;
-                    } else if (roomData[i].equals(Properties.DOUBLE_BED)) {
+                    } else if (roomData[i].equals(SystemUtils.DOUBLE_BED)) {
                         bedTypes[j] = BedType.DOUBLE;
-                    } else if (roomData[i].equals(Properties.KING_SIZE)) {
+                    } else if (roomData[i].equals(SystemUtils.KING_SIZE)) {
                         bedTypes[j] = BedType.KING_SIZE;
                     }
                 }

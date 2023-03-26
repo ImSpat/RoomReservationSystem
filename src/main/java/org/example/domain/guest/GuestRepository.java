@@ -1,7 +1,7 @@
 package org.example.domain.guest;
 
 import org.example.exceptions.PersistenceToFileException;
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -47,7 +47,7 @@ public class GuestRepository {
         }
 
         String name = "guests.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         try {
             Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class GuestRepository {
     void readAll() {
 
         String name = "guests.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
 
         if (!Files.exists(file)) {
             return;
@@ -78,7 +78,7 @@ public class GuestRepository {
 
                 Gender gender = Gender.FEMALE;
 
-                if (guestData[4].equals(Properties.MALE)) {
+                if (guestData[4].equals(SystemUtils.MALE)) {
                     gender = Gender.MALE;
                 }
                 addExistingGuest(id, guestData[1], guestData[2], age, gender);

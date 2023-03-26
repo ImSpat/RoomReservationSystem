@@ -6,7 +6,7 @@ import org.example.domain.guest.GuestService;
 import org.example.domain.room.Room;
 import org.example.domain.room.RoomService;
 import org.example.exceptions.PersistenceToFileException;
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -53,7 +53,7 @@ public class ReservationRepository {
 
     public void readAll() {
         String name = "reservations.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         if (!Files.exists(file)) {
             return;
         }
@@ -85,7 +85,7 @@ public class ReservationRepository {
 
     public void saveAll() {
         String name = "reservations.csv";
-        Path file = Paths.get(Properties.DATA_DIRECTORY.toString(), name);
+        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
         StringBuilder sb = new StringBuilder();
         for (Reservation reservation : this.reservations) {
             sb.append(reservation.toCSV());

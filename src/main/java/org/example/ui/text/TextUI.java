@@ -10,7 +10,7 @@ import org.example.domain.room.RoomService;
 import org.example.exceptions.OnlyNumberException;
 import org.example.exceptions.PersistenceToFileException;
 import org.example.exceptions.WrongOptionException;
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 import java.time.LocalDate;
 import java.util.InputMismatchException;
@@ -25,9 +25,9 @@ public class TextUI {
 
     public void showSystemInfo() {
 
-        System.out.println("Witam w systemie rezerwacji dla hotelu " + Properties.HOTEL_NAME);
-        System.out.println("Aktualna wersja systemu: " + Properties.SYSTEM_VERSION);
-        System.out.println("Wersja developerska: " + Properties.IS_DEVELOPER_VERSION);
+        System.out.println("Witam w systemie rezerwacji dla hotelu " + SystemUtils.HOTEL_NAME);
+        System.out.println("Aktualna wersja systemu: " + SystemUtils.SYSTEM_VERSION);
+        System.out.println("Wersja developerska: " + SystemUtils.IS_DEVELOPER_VERSION);
 
         System.out.println("\n=========================\n");
     }
@@ -96,11 +96,11 @@ public class TextUI {
     private void createReservation(Scanner input) {
         System.out.println("Od kiedy (DD.MM.YYYY): ");
         String fromAsString = input.next();
-        LocalDate from = LocalDate.parse(fromAsString, Properties.DATE_FORMATTER);
+        LocalDate from = LocalDate.parse(fromAsString, SystemUtils.DATE_FORMATTER);
 
         System.out.println("Do kiedy (DD.MM.YYYY): ");
         String toAsString = input.next();
-        LocalDate to = LocalDate.parse(toAsString, Properties.DATE_FORMATTER);
+        LocalDate to = LocalDate.parse(toAsString, SystemUtils.DATE_FORMATTER);
 
         System.out.println("ID Pokoju: ");
         int roomId = input.nextInt();

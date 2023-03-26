@@ -3,7 +3,7 @@ package org.example.domain.room;
 import org.example.domain.ObjectPool;
 import org.example.domain.room.dto.RoomDTO;
 import org.example.exceptions.WrongOptionException;
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,11 +100,11 @@ public class RoomService {
         BedType[] bedTypes = new BedType[bedTypesAsString.size()];
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
-            if (bedTypesAsString.get(i).equals(Properties.SINGLE_BED)) {
+            if (bedTypesAsString.get(i).equals(SystemUtils.SINGLE_BED)) {
                 bedType = BedType.SINGLE;
-            } else if (bedTypesAsString.get(i).equals(Properties.DOUBLE_BED)) {
+            } else if (bedTypesAsString.get(i).equals(SystemUtils.DOUBLE_BED)) {
                 bedType = BedType.DOUBLE;
-            } else if (bedTypesAsString.get(i).equals(Properties.KING_SIZE)) {
+            } else if (bedTypesAsString.get(i).equals(SystemUtils.KING_SIZE)) {
                 bedType = BedType.KING_SIZE;
             } else {
                 throw new WrongOptionException("Wrong option when selecting bed type");

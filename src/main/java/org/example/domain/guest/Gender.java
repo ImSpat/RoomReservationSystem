@@ -1,10 +1,10 @@
 package org.example.domain.guest;
 
-import org.example.util.Properties;
+import org.example.util.SystemUtils;
 
 public enum Gender {
-    MALE(Properties.MALE),
-    FEMALE(Properties.FEMALE);
+    MALE(SystemUtils.MALE),
+    FEMALE(SystemUtils.FEMALE);
 
     private String asStr;
 
