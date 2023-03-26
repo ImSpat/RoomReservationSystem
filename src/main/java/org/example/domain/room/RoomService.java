@@ -6,6 +6,7 @@ import org.example.exceptions.WrongOptionException;
 import org.example.util.SystemUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RoomService {
@@ -18,14 +19,14 @@ public class RoomService {
 
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
 
-        BedType[] bedTypes = getBedTypes(bedTypesAsString);
+        List<BedType> bedTypes = getBedTypes(bedTypesAsString);
 
         return repository.createNewRoom(number, bedTypes);
     }
 
     public Room createNewRoom(int number, int[] bedTypesOptions) {
 
-        BedType[] bedTypes = getBedTypes(bedTypesOptions);
+        List<BedType> bedTypes = getBedTypes(bedTypesOptions);
 
         return repository.createNewRoom(number, bedTypes);
     }
@@ -47,12 +48,12 @@ public class RoomService {
     }
 
     public void editRoom(int id, int number, int[] bedTypesOptions) {
-        BedType[] bedTypes = getBedTypes(bedTypesOptions);
+        List<BedType> bedTypes = getBedTypes(bedTypesOptions);
         repository.edit(id, number, bedTypes);
     }
 
     public void editRoom(int id, int number, List<String> bedTypesAsString) {
-        BedType[] bedTypes = getBedTypes(bedTypesAsString);
+        List<BedType> bedTypes = getBedTypes(bedTypesAsString);
         this.repository.edit(id, number, bedTypes);
     }
 
@@ -78,7 +79,7 @@ public class RoomService {
         return instance;
     }
 
-    private BedType[] getBedTypes(int[] bedTypesOptions) {
+    private List<BedType> getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
         for (int i = 0; i < bedTypesOptions.length; i++) {
             BedType bedType;
@@ -93,10 +94,10 @@ public class RoomService {
             }
             bedTypes[i] = bedType;
         }
-        return bedTypes;
+        return Arrays.asList(bedTypes);
     }
 
-    private BedType[] getBedTypes(List<String> bedTypesAsString) {
+    private List<BedType> getBedTypes(List<String> bedTypesAsString) {
         BedType[] bedTypes = new BedType[bedTypesAsString.size()];
         for (int i = 0; i < bedTypesAsString.size(); i++) {
             BedType bedType;
@@ -111,6 +112,6 @@ public class RoomService {
             }
             bedTypes[i] = bedType;
         }
-        return bedTypes;
+        return Arrays.asList(bedTypes);
     }
 }
