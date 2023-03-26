@@ -78,7 +78,13 @@ public class RoomRepository {
                 BedType[] bedTypes = new BedType[roomData.length - 2];
                 for (int i = 2; i < roomData.length; i++) {
                     int j = i - 2;
-                    bedTypes[j] = BedType.valueOf(roomData[i]);
+                    if (roomData[i].equals(Properties.SINGLE_BED)) {
+                        bedTypes[j] = BedType.SINGLE;
+                    } else if (roomData[i].equals(Properties.DOUBLE_BED)) {
+                        bedTypes[j] = BedType.DOUBLE;
+                    } else if (roomData[i].equals(Properties.KING_SIZE)) {
+                        bedTypes[j] = BedType.KING_SIZE;
+                    }
                 }
                 addExistingRoom(id, number, bedTypes);
             }

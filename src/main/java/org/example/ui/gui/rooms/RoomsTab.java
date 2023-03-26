@@ -3,6 +3,7 @@ package org.example.ui.gui.rooms;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,16 +17,19 @@ public class RoomsTab {
 
     private Tab roomTab;
     private RoomService roomService = ObjectPool.getRoomService();
+    private Stage primaryStage;
 
     public RoomsTab(Stage primaryStage) {
 
         TableView<RoomDTO> tableView = getRoomDTOTableView();
 
+        this.primaryStage = primaryStage;
+
         Button btn = new Button("Dodaj nowy");
         btn.setOnAction(actionEvent -> {
             Stage stg = new Stage();
             stg.initModality(Modality.WINDOW_MODAL);
-            stg.initOwner(primaryStage);
+            stg.initOwner(this.primaryStage);
             stg.setScene(new AddNewRoomScene(stg, tableView).getMainScene());
             stg.setTitle("Dodaj nowy pokój");
 
@@ -58,6 +62,8 @@ public class RoomsTab {
 
         deleteColumn.setCellFactory(param -> new TableCell<>() {
             Button deleteButton = new Button("Usuń");
+            Button editButton = new Button("Edytuj");
+            HBox hBox = new HBox(deleteButton, editButton);
 
             @Override
             protected void updateItem(RoomDTO value, boolean empty) {
@@ -65,10 +71,19 @@ public class RoomsTab {
                 if (value == null) {
                     setGraphic(null);
                 } else {
-                    setGraphic(deleteButton);
+                    setGraphic(hBox);
                     deleteButton.setOnAction(actionEvent -> {
                         roomService.removeRoom(value.getId());
                         tableView.getItems().remove(value);
+                    });
+                    editButton.setOnAction(actionEvent -> {
+                        Stage stg = new Stage();
+                        stg.initModality(Modality.WINDOW_MODAL);
+                        stg.initOwner(primaryStage);
+                        stg.setScene(new EditRoomScene(stg, tableView, value).getMainScene());
+                        stg.setTitle("Edytuj pokój");
+
+                        stg.showAndWait();
                     });
                 }
             }
