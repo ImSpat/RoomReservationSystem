@@ -46,7 +46,7 @@ public class AddNewReservationScene {
         List<RoomDTO> allAsDTO = this.roomService.getAllAsDTO();
         List<RoomSelectionItem> roomSelectionItems = new ArrayList<>();
         allAsDTO.forEach(dto -> {
-            roomSelectionItems.add(new RoomSelectionItem(dto.getNumber(), dto.getId()));
+            roomSelectionItems.add(new RoomSelectionItem(dto.getNumber(), (int)dto.getId()));
         });
 
         List<GuestDTO> guestsAsDTO = this.guestService.getGuestsAsDTO();
