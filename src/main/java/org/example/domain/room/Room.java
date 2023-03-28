@@ -8,8 +8,8 @@ import java.util.List;
 public class Room {
 
     private final long id;
-    private final int number;
-    private final List<BedType> beds;
+    private int number;
+    private List<BedType> beds;
 
     Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
@@ -61,5 +61,17 @@ public class Room {
 
     public int getNumber() {
         return this.number;
+    }
+
+    public void addBed(BedType bedType) {
+        this.beds.add(bedType);
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setBeds(List<BedType> beds) {
+        this.beds = beds;
     }
 }
