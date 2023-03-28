@@ -27,7 +27,7 @@ public class ReservationService {
         return instance;
     }
 
-    public Reservation createNewReservation(LocalDate from, LocalDate to, int roomId, int guestId) throws IllegalArgumentException {
+    public Reservation createNewReservation(LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException {
 
         //TODO: handle null room
         Room room = roomService.getRoomById(roomId);
@@ -63,7 +63,7 @@ public class ReservationService {
         return result;
     }
 
-    public void removeReservation(int id) {
+    public void removeReservation(long id) {
         this.repository.remove(id);
     }
 }

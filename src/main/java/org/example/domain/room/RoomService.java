@@ -57,7 +57,7 @@ public class RoomService {
         this.repository.edit(id, number, bedTypes);
     }
 
-    public Room getRoomById(int roomId) {
+    public Room getRoomById(long roomId) {
         return repository.getById(roomId);
     }
 

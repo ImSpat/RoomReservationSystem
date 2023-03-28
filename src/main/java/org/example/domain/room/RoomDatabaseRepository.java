@@ -122,9 +122,9 @@ public class RoomDatabaseRepository implements RoomRepository {
             roomToBeUpdated.setNumber(number);
             roomToBeUpdated.setBeds(bedTypes);
 
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("Błąd przy modyfikacji danych");
-            throw new RuntimeException(throwables);
+            throw new RuntimeException(e);
         }
     }
 

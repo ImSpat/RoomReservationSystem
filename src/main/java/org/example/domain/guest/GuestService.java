@@ -52,7 +52,7 @@ public class GuestService {
         repository.edit(id, firstName, lastName, age, gender);
     }
 
-    public Guest getGuestById(int Id) {
+    public Guest getGuestById(long Id) {
         return repository.findById(Id);
     }
 
