@@ -52,7 +52,7 @@ public class AddNewReservationScene {
         List<GuestDTO> guestsAsDTO = this.guestService.getGuestsAsDTO();
         List<GuestSelectionItem> guestSelectionItems = new ArrayList<>();
         guestsAsDTO.forEach(dto -> {
-            guestSelectionItems.add(new GuestSelectionItem(dto.getFirstName(), dto.getLastName(), dto.getId()));
+            guestSelectionItems.add(new GuestSelectionItem(dto.getFirstName(), dto.getLastName(), (int)dto.getId()));
         });
 
         Label roomLabel = new Label("Pokój:");

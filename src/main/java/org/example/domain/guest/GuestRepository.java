@@ -1,129 +1,19 @@
 package org.example.domain.guest;
 
-import org.example.exceptions.PersistenceToFileException;
-import org.example.util.SystemUtils;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
-public class GuestRepository {
+public interface GuestRepository {
+    Guest createNewGuest(String firstName, String lastName, int age, Gender gender);
 
-    private final List<Guest> guests = new ArrayList<>();
-    private static final GuestRepository instance = new GuestRepository();
+    List<Guest> getAll();
 
-    private GuestRepository() {
-    }
+    void saveAll();
 
-    public static GuestRepository getInstance() {
-        return instance;
-    }
+    void readAll();
 
-    Guest createNewGuest(String firstName, String lastName, int age, Gender gender) {
-        Guest newGuest = new Guest(findNewId(), firstName, lastName, age, gender);
-        guests.add(newGuest);
-        return newGuest;
-    }
+    void remove(long id);
 
-    Guest addExistingGuest(int id, String firstName, String lastName, int age, Gender gender) {
-        Guest newGuest = new Guest(id, firstName, lastName, age, gender);
-        guests.add(newGuest);
-        return newGuest;
-    }
+    void edit(long id, String firstName, String lastName, int age, Gender gender);
 
-    public List<Guest> getAll() {
-        return guests;
-    }
-
-    void saveAll() {
-
-        StringBuilder sb = new StringBuilder();
-        for (Guest guest : guests) {
-            sb.append(guest.toCSV());
-        }
-
-        String name = "guests.csv";
-        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
-        try {
-            Files.writeString(file, sb.toString(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new PersistenceToFileException(file.toString(), "write", "guests data");
-        }
-    }
-
-    void readAll() {
-
-        String name = "guests.csv";
-        Path file = Paths.get(SystemUtils.DATA_DIRECTORY.toString(), name);
-
-        if (!Files.exists(file)) {
-            return;
-        }
-
-        try {
-            String data = Files.readString(file, StandardCharsets.UTF_8);
-            String[] guestsAsString = data.split(System.getProperty("line.separator"));
-
-            for (String guestAsString : guestsAsString) {
-                String[] guestData = guestAsString.split(",");
-                if (guestData[0] == null || guestData[0].trim().isEmpty()) {
-                    continue;
-                }
-                int id = Integer.parseInt(guestData[0]);
-                int age = Integer.parseInt(guestData[3]);
-
-                Gender gender = Gender.FEMALE;
-
-                if (guestData[4].equals(SystemUtils.MALE)) {
-                    gender = Gender.MALE;
-                }
-                addExistingGuest(id, guestData[1], guestData[2], age, gender);
-            }
-        } catch (IOException e) {
-            throw new PersistenceToFileException(file.toString(), "read", "guests data");
-        }
-
-    }
-
-    private int findNewId() {
-        int max = 0;
-        for (Guest guest : guests) {
-            if (guest.getId() > max) {
-                max = guest.getId();
-            }
-        }
-        return max + 1;
-    }
-
-    public void remove(int id) {
-        int guestToBeRemovedIndex = -1;
-
-        for (int i = 0; i < guests.size(); i++) {
-            if (this.guests.get(i).getId() == id) {
-                guestToBeRemovedIndex = i;
-                break;
-            }
-        }
-        if (guestToBeRemovedIndex > -1) {
-            this.guests.remove(guestToBeRemovedIndex);
-        }
-    }
-
-    public void edit(int id, String firstName, String lastName, int age, Gender gender) {
-        remove(id);
-        addExistingGuest(id, firstName, lastName, age, gender);
-    }
-
-    public Guest findById(int Id) {
-        for (Guest guest : guests) {
-            if (guest.getId() == Id) {
-                return guest;
-            }
-        }
-        return null;
-    }
+    Guest findById(long Id);
 }
