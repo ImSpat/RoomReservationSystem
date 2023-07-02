@@ -14,7 +14,11 @@ public class Room {
     Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
-        this.beds = bedTypes;
+        if(bedTypes==null){
+            this.beds = new ArrayList<>();
+        } else {
+            this.beds = bedTypes;
+        }
     }
 
     public long getId() {
@@ -36,7 +40,10 @@ public class Room {
         for (BedType bed : beds) {
             bedInfo.append(bed).append(",");
         }
-        bedInfo.deleteCharAt(bedInfo.length() - 1);
+        if (bedInfo.length()>0){
+            bedInfo.deleteCharAt(bedInfo.length() - 1);
+        }
+
 
         return String.format("%d,%d,%s%s", this.id, this.number, bedInfo, System.getProperty("line.separator"));
     }
@@ -73,5 +80,9 @@ public class Room {
 
     public void setBeds(List<BedType> beds) {
         this.beds = beds;
+    }
+
+    public List<BedType> getBeds() {
+        return this.beds;
     }
 }
