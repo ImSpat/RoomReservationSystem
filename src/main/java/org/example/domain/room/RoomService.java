@@ -79,7 +79,7 @@ public class RoomService {
         return instance;
     }
 
-    private List<BedType> getBedTypes(int[] bedTypesOptions) {
+    List<BedType> getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
         for (int i = 0; i < bedTypesOptions.length; i++) {
             BedType bedType;
