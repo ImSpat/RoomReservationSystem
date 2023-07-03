@@ -15,6 +15,12 @@ public class Guest {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        if (gender==null){
+            if (firstName.charAt(firstName.length()-1)=='a'){
+                this.gender = Gender.FEMALE;
+            }else
+            this.gender = Gender.MALE;
+        }else
         this.gender = gender;
     }
 
@@ -47,10 +53,14 @@ public class Guest {
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
+    }
+
+    public Gender getGender() {
+        return this.gender;
     }
 }
