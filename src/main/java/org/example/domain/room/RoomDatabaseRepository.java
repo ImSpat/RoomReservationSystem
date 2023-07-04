@@ -9,14 +9,12 @@ public class RoomDatabaseRepository implements RoomRepository {
 
     private DatabaseRoomConnector connector = new JDBCRoomConnector();
 
-    private final static RoomRepository instance = new RoomDatabaseRepository();
+    private static RoomDatabaseRepository instance = new RoomDatabaseRepository();
 
-
-
-    private RoomDatabaseRepository() {
+    RoomDatabaseRepository() {
     }
 
-    public static RoomRepository getInstance() {
+    public static RoomDatabaseRepository getInstance() {
         return instance;
     }
 
