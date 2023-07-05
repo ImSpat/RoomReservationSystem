@@ -1,20 +1,29 @@
 package org.example.domain.room;
 
 import org.example.domain.ObjectPool;
+import org.example.domain.reservation.Reservation;
+import org.example.domain.reservation.ReservationService;
 import org.example.domain.room.dto.RoomDTO;
 import org.example.exceptions.WrongOptionException;
 import org.example.util.SystemUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class RoomService {
 
-    private final RoomRepository repository = ObjectPool.getRoomRepository();
-    private final static RoomService instance = new RoomService();
+    private RoomRepository repository = ObjectPool.getRoomRepository();
+    private ReservationService reservationService = ObjectPool.getReservationService();
+//    private final static RoomService instance = new RoomService();
 
-    private RoomService() {
+    //    public static RoomService getInstance() {
+//        return instance;
+//    }
+
+    public RoomService() {
     }
 
     public Room createNewRoom(int number, List<String> bedTypesAsString) {
@@ -75,10 +84,6 @@ public class RoomService {
         return result;
     }
 
-    public static RoomService getInstance() {
-        return instance;
-    }
-
     List<BedType> getBedTypes(int[] bedTypesOptions) {
         BedType[] bedTypes = new BedType[bedTypesOptions.length];
         for (int i = 0; i < bedTypesOptions.length; i++) {
@@ -113,5 +118,50 @@ public class RoomService {
             bedTypes[i] = bedType;
         }
         return Arrays.asList(bedTypes);
+    }
+
+    public List<Room> getAvailableRooms(LocalDate from, LocalDate to) {
+
+        if (from==null || to==null){
+            throw new IllegalArgumentException("Parameters cant be null");
+        }
+
+        if (to.isBefore(from)){
+            throw new IllegalArgumentException("End date cant be before start date");
+        }
+
+        List<Room> availableRooms = this.repository.getAll();
+
+        LocalDateTime fromWithHour = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
+        LocalDateTime toWithHour = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
+
+        List<Reservation> reservations = this.reservationService.getAllReservations();
+
+        for (Reservation reservation : reservations){
+            if (reservation.getFrom().isEqual(fromWithHour)){
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getTo().isEqual(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getFrom().isAfter(fromWithHour) &&
+                        reservation.getFrom().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (reservation.getTo().isAfter(fromWithHour) &&
+                    reservation.getTo().isBefore(toWithHour)) {
+                availableRooms.remove(reservation.getRoom());
+            } else if (fromWithHour.isAfter(reservation.getFrom()) &&
+                    toWithHour.isBefore(reservation.getTo())) {
+                availableRooms.remove(reservation.getRoom());
+            }
+        }
+
+        return availableRooms;
+    }
+
+    public void setRepository(RoomRepository roomRepository) {
+        this.repository = roomRepository;
+    }
+
+    public void setReservationService(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 }

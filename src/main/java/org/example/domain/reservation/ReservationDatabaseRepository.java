@@ -87,7 +87,7 @@ public class ReservationDatabaseRepository implements ReservationRepository {
 
     @Override
     public List<Reservation> getAll() {
-        return this.reservations;
+        return new ArrayList<>(this.reservations);
     }
 
     @Override

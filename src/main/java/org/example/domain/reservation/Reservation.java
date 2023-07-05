@@ -5,6 +5,7 @@ import org.example.domain.reservation.dto.ReservationDTO;
 import org.example.domain.room.Room;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public class Reservation {
 
@@ -40,5 +41,17 @@ public class Reservation {
         return new ReservationDTO(this.id, this.from,
                 this.to, this.room.getId(), this.room.getNumber(),
                 this.guest.getId(), this.guest.getFirstName() + " " + this.guest.getLastName());
+    }
+
+    public LocalDateTime getFrom() {
+        return this.from;
+    }
+
+    public Room getRoom() {
+        return this.room;
+    }
+
+    public LocalDateTime getTo() {
+        return this.to;
     }
 }
