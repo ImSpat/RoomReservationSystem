@@ -12,7 +12,7 @@ public class Room {
     private int number;
     private List<BedType> beds;
 
-    Room(long id, int number, List<BedType> bedTypes) {
+    public Room(long id, int number, List<BedType> bedTypes) {
         this.id = id;
         this.number = number;
         if(bedTypes==null){

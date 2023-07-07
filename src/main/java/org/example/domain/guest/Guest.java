@@ -15,13 +15,13 @@ public class Guest {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        if (gender==null){
-            if (firstName.charAt(firstName.length()-1)=='a'){
+        if (gender == null) {
+            if (firstName.charAt(firstName.length() - 1) == 'a') {
                 this.gender = Gender.FEMALE;
-            }else
-            this.gender = Gender.MALE;
-        }else
-        this.gender = gender;
+            } else
+                this.gender = Gender.MALE;
+        } else
+            this.gender = gender;
     }
 
     public long getId() {
