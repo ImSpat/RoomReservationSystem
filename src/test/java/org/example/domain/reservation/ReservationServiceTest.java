@@ -1,6 +1,5 @@
 package org.example.domain.reservation;
 
-import org.example.domain.ObjectPool;
 import org.example.domain.guest.GuestService;
 import org.example.domain.room.BedType;
 import org.example.domain.room.Room;
@@ -8,7 +7,6 @@ import org.example.domain.room.RoomService;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,8 +21,8 @@ public class ReservationServiceTest {
         //given
         LocalDate from = LocalDate.parse("2020-11-30");
         LocalDate to = LocalDate.parse("2020-12-03");
-        Long roomId = 1l;
-        Long guestId = 1l;
+        long roomId = 1L;
+        long guestId = 1L;
 
         ReservationService reservationService = new ReservationService();
         RoomService roomService = mock(RoomService.class);
@@ -46,8 +44,8 @@ public class ReservationServiceTest {
         //given
         LocalDate from = LocalDate.parse("2020-11-30");
         LocalDate to = LocalDate.parse("2020-12-03");
-        Long roomId = 1l;
-        Long guestId = 1l;
+        long roomId = 1L;
+        long guestId = 1L;
 
         ReservationService reservationService = new ReservationService();
         RoomService roomService = mock(RoomService.class);
