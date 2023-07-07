@@ -1,5 +1,9 @@
 package org.example.domain.room;
 
+import org.example.domain.room.BedType;
+import org.example.domain.room.DatabaseRoomConnector;
+import org.example.domain.room.Room;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +37,8 @@ public class MockDatabaseRoomConnector implements DatabaseRoomConnector {
 
     @Override
     public Room createNewRoom(int number, List<BedType> bedTypes) {
-        return null;
+
+        Room room = new Room(5l, number, bedTypes);
+        return room;
     }
 }

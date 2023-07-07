@@ -11,7 +11,7 @@ public class RoomDatabaseRepository implements RoomRepository {
 
     private static RoomDatabaseRepository instance = new RoomDatabaseRepository();
 
-    RoomDatabaseRepository() {
+    public RoomDatabaseRepository() {
     }
 
     public static RoomDatabaseRepository getInstance() {
@@ -82,7 +82,7 @@ public class RoomDatabaseRepository implements RoomRepository {
         return new ArrayList<>(this.rooms);
     }
 
-    void setConnector(DatabaseRoomConnector connector){
+    public void setConnector(DatabaseRoomConnector connector){
         this.connector = connector;
     }
 }

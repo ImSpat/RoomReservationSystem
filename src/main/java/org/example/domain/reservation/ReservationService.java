@@ -29,10 +29,15 @@ public class ReservationService {
 
     public Reservation createNewReservation(LocalDate from, LocalDate to, long roomId, long guestId) throws IllegalArgumentException {
 
-        //TODO: handle null room
         Room room = roomService.getRoomById(roomId);
-        //TODO: handle null guest
+        if (room == null) {
+            throw new IllegalArgumentException("Invalid room ID: " + roomId);
+        }
+
         Guest guest = guestService.getGuestById(guestId);
+        if (guest == null) {
+            throw new IllegalArgumentException("Invalid guest ID: " + guestId);
+        }
 
         LocalDateTime fromWithTime = from.atTime(SystemUtils.HOTEL_NIGHT_START_HOUR, SystemUtils.HOTEL_NIGHT_START_MINUTE);
         LocalDateTime toWithTime = to.atTime(SystemUtils.HOTEL_NIGHT_END_HOUR, SystemUtils.HOTEL_NIGHT_END_MINUTE);
