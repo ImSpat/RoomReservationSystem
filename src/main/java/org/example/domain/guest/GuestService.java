@@ -58,11 +58,14 @@ public class GuestService {
 
     public List<GuestDTO> getGuestsAsDTO() {
         List<GuestDTO> result = new ArrayList<>();
+
         List<Guest> guests = repository.getAll();
 
-        for (Guest guest : guests) {
-            GuestDTO dto = guest.getAsDTO();
-            result.add(dto);
+        if (guests!=null){
+            for (Guest guest : guests) {
+                GuestDTO dto = guest.getAsDTO();
+                result.add(dto);
+            }
         }
         return result;
     }

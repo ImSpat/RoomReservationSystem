@@ -24,11 +24,12 @@ public class App extends Application {
         try {
             SystemUtils su = new SystemUtils();
             SystemUtils.createDataDirectory();
-            su.createDatabaseConnection();
+//            su.createDatabaseConnection();
             System.out.println("Trwa ładowanie danych");
             guestService.readAll();
             roomService.readAll();
             reservationService.readAll();
+            System.out.println("Dane załadowane");
         } catch (IOException e) {
             throw new PersistenceToFileException(SystemUtils.DATA_DIRECTORY.toString(), "create", "directory");
         }

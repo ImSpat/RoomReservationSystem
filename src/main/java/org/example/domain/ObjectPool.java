@@ -1,12 +1,15 @@
 package org.example.domain;
 
 import org.example.domain.guest.GuestDatabaseRepository;
+import org.example.domain.guest.GuestJpaRepository;
 import org.example.domain.guest.GuestRepository;
 import org.example.domain.guest.GuestService;
 import org.example.domain.reservation.ReservationDatabaseRepository;
+import org.example.domain.reservation.ReservationJpaRepository;
 import org.example.domain.reservation.ReservationRepository;
 import org.example.domain.reservation.ReservationService;
 import org.example.domain.room.RoomDatabaseRepository;
+import org.example.domain.room.RoomJpaRepository;
 import org.example.domain.room.RoomRepository;
 import org.example.domain.room.RoomService;
 
@@ -24,26 +27,22 @@ public class ObjectPool {
     }
 
     public static GuestRepository getGuestRepository() {
-//        return GuestFileRepository.getInstance();
-        return GuestDatabaseRepository.getInstance();
+        return GuestJpaRepository.getInstance();
     }
 
     public static ReservationService getReservationService() {
-//        return ReservationService.getInstance();
         return reservationService;
     }
 
     public static ReservationRepository getReservationRepository() {
-        return ReservationDatabaseRepository.getInstance();
+        return ReservationJpaRepository.getInstance();
     }
 
     public static RoomService getRoomService() {
-//        return RoomService.getInstance();
         return roomService;
     }
 
     public static RoomRepository getRoomRepository() {
-//        return RoomFileRepository.getInstance();
-        return RoomDatabaseRepository.getInstance();
+        return RoomJpaRepository.getInstance();
     }
 }
