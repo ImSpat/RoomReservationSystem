@@ -15,8 +15,8 @@ import java.util.List;
 
 public class ReservationService {
 
-    private final RoomService roomService = ObjectPool.getRoomService();
-    private final GuestService guestService = ObjectPool.getGuestService();
+    private RoomService roomService = ObjectPool.getRoomService();
+    private GuestService guestService = ObjectPool.getGuestService();
     private final ReservationRepository repository = ObjectPool.getReservationRepository();
     //private static final ReservationService instance = new ReservationService();
     // removed Singleton because test were failing
@@ -74,5 +74,13 @@ public class ReservationService {
 
     public List<Reservation> getAllReservations() {
         return this.repository.getAll();
+    }
+
+    public void setRoomService(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
+    public void setGuestService(GuestService guestService) {
+        this.guestService = guestService;
     }
 }
