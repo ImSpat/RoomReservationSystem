@@ -16,4 +16,5 @@
 - Code refactoring techniques
 - JavaFX
 
+## How to run
 To run, use the command `mvn clean javafx:run`.
